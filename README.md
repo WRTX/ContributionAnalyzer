@@ -16,9 +16,11 @@
 
 ##使用
 
-执行以下命令
+先clone要分析的仓库到本地，注意要把需要分析的branch全部clone下来，Analyzer会把所有本地存在的分支都计入统计结果
 
-    ./RepositoryAnalyzer <RepoDirctory>
+然后执行以下命令来生成分析报告
+
+    ./RepositoryAnalyzer <RepoDirctory>        
     
 注: 在Report中点击一个Author可以将底部相应的commit高亮
 
