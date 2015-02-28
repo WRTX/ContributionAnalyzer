@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Git Repo Analyzer</title>
+
+        <!-- Bootstrap -->
+        <!-- 新 Bootstrap 核心 CSS 文件 -->
+        <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
+
+        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+        <script src="./lib/jquery/1.11.2/jquery.min.js"></script>
+
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
+
+        <link href="./lib/bootstrapDataPicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+
+        <script type="text/javascript" src="./lib/bootstrapDataPicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="./lib/bootstrapDataPicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+
+        <link rel="stylesheet" href="./css/GitRepoAnalyzer.css">
+        <script src="../GitRepoInfo/commitsData.js"></script>
+        <script src="../GitRepoInfo/analyzerConfig.js"></script>
+
+        <script src="./js/analyzer.js"></script>
+        <script src="./js/filter.js"></script>
+
+        <script src="./js/control.js"></script>
+
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                control.init();
+            });
+        </script>
+
+    </head>
+    
+    <body>
+
+        <div id="main">
+
+            <h1>Git Repository Analyzer</h1>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Filters</h3>
+                </div>
+                <table class="table" id="filters_table">
+                    <tr>
+                        <td>Author</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-sm" id="author_button">All authors</button>
+                                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" id="author_ul">
+                                    
+                                </ul>
+                            </div>
+                        </td>
+                        <td></td>
+
+                        
+                    </tr>
+
+                    <tr>
+                        <td>Branch</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-sm" id="branch_button">All branches</button>
+                                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" id="branch_ul">
+                                    
+                                </ul>
+                            </div>
+                        </td>
+                        <td></td>
+                        
+                    </tr>
+                    <tr>
+                        <td>Commit Type</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-sm" id="commitType_button">Commits Without Mergers</button>
+                                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a onclick="control.updateCommitType(this)">Commits Without Merges</a></li>
+                                    <li><a onclick="control.updateCommitType(this)">Commits Merges</a></li>
+                                    <li><a onclick="control.updateCommitType(this)">All Commits</a></li>
+                                </ul>
+                            </div>
+
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Lines Modify Type</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-sm" id="lineType_button">All Lines Modify</button>
+                                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a onclick="control.updateLineType(this)">All Lines Modify</a></li>
+                                    <li><a onclick="control.updateLineType(this)">Lines Add</a></li>
+                                    <li><a onclick="control.updateLineType(this)">Lines Remove</a></li>
+                                </ul>
+                            </div>
+
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Time</td>
+                        <td  style="line-height: 36px;">
+                            <div style="float: left">From</div>
+                            <input size="16" type="text" value="2012-01-01 00:00" id="datepicker_begin" readonly class="form-control form_datetime" style="width:180px;float: left;margin-left: 20px">
+                        </td>
+                        
+                        <td style="line-height: 36px;">
+                            <div style="float: left">To</div>
+                            <input size="16" type="text" value="2015-12-31 23:59" id="datepicker_end" readonly class="form-control form_datetime" style="width:180px;float: left;margin-left: 20px">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Directory</td>
+                        <td>
+                            <p>Include Directory</p>
+                            <ul id="include_dir_ul">
+                              
+                              
+                            </ul>
+
+                            <p>Exclude Directory</p>
+                            <ul id="exclude_dir_ul">
+                              
+                            </ul>
+                        </td>
+                        </td>
+                        <td></td>
+                    </tr>
+                    
+                </table>
+            </div>
+
+            <!-- Reports Table -->
+            <div class="panel panel-info">
+
+                <div class="panel-heading">
+                    <h3 class="panel-title">Reports</h3>
+                </div>
+
+                <table class="table" id="reports_table" >
+
+                    <tr>
+                        <td class="reports_table_td0">
+                            <h5>Commits Count</h5>
+                        </td>
+                        <td>
+                            <table class="author_report_table" id="commitReportTable">
+                                
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <h5>Lines Count</h5>
+                        </td>
+                        <td>
+                            <table class="author_report_table" id="lineReportTable">
+                                
+
+                                <tr >
+                                    <td class="author_report_table_td0">zzz</td>
+                                    <td class="td1">189</td>
+                                    <td>
+                                        <div class="progress" style="margin-bottom: 0px">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                            60%
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr >
+                                    <td class="author_report_table_td0">zzz</td>
+                                    <td class="td1">189</td>
+                                    <td>
+                                        <div class="progress" style="margin-bottom: 0px">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                            60%
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                            </table>
+                        </td>
+                        
+                    </tr>
+                    
+                </table>
+            </div>
+
+            <!-- Commits Table -->
+            <div class="panel panel-success">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <h3 class="panel-title">Commits</h3>
+                </div>
+
+                <!-- Table -->
+                <table class="table" id="commitsTable">
+                    <thead>
+                        <th class="th0">Index</th>
+                        <th class="th1">Author</th>
+                        <th class="th2">Hash</th>
+                        <th class="th3">Time</th>
+                        <th>Note</th>
+                    </thead>
+                    <tbody id="commitsTableBody">
+                        
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        </body>
+</html>

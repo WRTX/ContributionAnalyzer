@@ -1,0 +1,53 @@
+
+
+
+.reports_table_td0{
+    width:15%;
+}
+
+.author_report_table{
+    width: 100%;
+}
+
+.author_report_table tr{
+    line-height: 36px;
+}
+
+.author_report_table_td0{
+    width:10%;
+}
+
+.author_report_table .td1{
+    width:7%;
+}
+
+
+#commitsTable .th0{
+    width: 5%;
+}
+
+#commitsTable .th1{
+    width: 9%;
+}
+
+#commitsTable .th2{
+    width: 5%;
+}
+
+#commitsTable .th3{
+    width: 15%;
+}
+
+#commitsTableBody{
+    color: #666666;
+}
+
+#include_dir_ul,#exclude_dir_ul{
+    color:#AAAAAA;
+}
+
+#main{
+    width: 1024px;
+    margin: 0 auto;
+}
+
