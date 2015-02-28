@@ -190,11 +190,12 @@ control.show = function () {
     }
 
     $("#commitReportTable").empty();
+    var html_nodes = new Array();
     for (var author in commitReport) {  
 
         var process =  parseInt((commitReport[author]/allCommitCount)*100);
 
-        var html = '<tr > \
+        var html = '<tr sort_flag="' + commitReport[author] + '"> \
                         <td class="author_report_table_td0">' + author + '</td>\
                         <td class="td1">' + commitReport[author] + '</td>\
                         <td>\
@@ -206,7 +207,20 @@ control.show = function () {
                         </td>\
                     </tr>';
 
-        $("#commitReportTable").append(html);
+        html_nodes.push( $(html) );
+    }
+
+    //sort
+    var sort_core = function(a, b) {
+        var process_a = parseInt( a.attr("sort_flag"));
+        var process_b = parseInt( b.attr("sort_flag"));
+        //console.log([process_a,process_b]);
+        return process_b - process_a;
+    }
+
+    html_nodes = html_nodes.sort( sort_core );
+    for(var idx in html_nodes){
+        $("#commitReportTable").append( html_nodes[idx] );
     }
 
     //build line report
@@ -218,11 +232,12 @@ control.show = function () {
     }
 
     $("#lineReportTable").empty();
+    var html_nodes = new Array();
     for (var author in lineReport) {  
 
         var process =  parseInt((lineReport[author]/allLinesCount)*100);
 
-        var html = '<tr > \
+        var html = '<tr sort_flag="' + lineReport[author] + '"> \
                         <td class="author_report_table_td0">' + author + '</td>\
                         <td class="td1">' + lineReport[author] + '</td>\
                         <td>\
@@ -234,8 +249,14 @@ control.show = function () {
                         </td>\
                     </tr>';
 
-        $("#lineReportTable").append(html);
+        html_nodes.push( $(html) );
     }
+
+    html_nodes = html_nodes.sort( sort_core );
+    for(var idx in html_nodes){
+        $("#lineReportTable").append( html_nodes[idx] );
+    }
+
 
 
     console.log("show report complete");
