@@ -29,8 +29,11 @@
 
 GitRepoAnalyzer 默认对git仓库目录下面所有修改进行统计。  
 
-如果需要自定义，需要把 GitRepoAnalyzer／Template/ 目录中的 analyzerConfig.js 复制到要统计的目录中，analyzerConfig.js 中有三个列表可以进行配置。
+如果需要自定义，需要把 GitRepoAnalyzer/Template/ 目录中的 analyzerConfig.js 复制到要统计的目录中，analyzerConfig.js 中有三个列表可以进行配置。
 
 * includeDir 这个列表中的目录里的代码修改会进行行数统计(不包含子目录)
 * includeDirWithRecursion 这个列表中的目录里的代码修改会进行行数统计( 含子目录)
 * excludeDir 这个列表的目的是在上面两个列表中排除掉一部分（含子目录）
+
+##依赖
+* python3
