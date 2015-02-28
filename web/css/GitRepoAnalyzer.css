@@ -42,9 +42,14 @@
     color: #666666;
 }
 
+#commitsTableBody .activeAuthor{
+    background-color: #fcf8e3;
+}
+
 #include_dir_ul,#exclude_dir_ul{
     color:#AAAAAA;
 }
+
 
 #main{
     width: 1024px;

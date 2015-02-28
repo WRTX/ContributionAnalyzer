@@ -19,6 +19,8 @@
 执行以下命令
 
     ./RepositoryAnalyzer <RepoDirctory>
+    
+注: 在Report中点击一个Author可以将底部相应的commit高亮
 
 ##配置
 

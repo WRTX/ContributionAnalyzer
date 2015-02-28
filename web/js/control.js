@@ -1,7 +1,7 @@
 
 var control = new Object();
 
-
+control.markLock = false;
 
 control.init = function() {
     
@@ -93,7 +93,7 @@ control.updateAuthor = function (li) {
         $("#author_button").text(author);
     }
 
-    this.show();
+    control.show();
 }
 
 control.updateBranch = function (li) {
@@ -109,7 +109,7 @@ control.updateBranch = function (li) {
         $("#branch_button").text(branch);
     }
 
-    this.show();
+    control.show();
 }
 
 control.updateTimeRange = function () {
@@ -130,7 +130,7 @@ control.updateTimeRange = function () {
 
     console.log("update time range: " + filter.time_begin + " ~ " + filter.time_end);
 
-    this.show();
+    control.show();
 }
 
 
@@ -143,7 +143,7 @@ control.updateCommitType = function (li) {
     filter.commitType = commitType;
     filter.enable_commitType = true;
 
-    this.show();
+    control.show();
 }
 
 control.updateLineType = function (li) {
@@ -155,9 +155,32 @@ control.updateLineType = function (li) {
     filter.lineType = lineType;
     filter.enable_lineType = true;
 
-    this.show();
+    control.show();
 }
 
+
+control.markCommitWithAuthor = function (tr) {
+    
+    var author= $(tr).attr("author");
+    console.log("control.markCommitWithAuthor:",author);
+
+    //make clean
+    var commits = $('.activeAuthor');
+    for(var i =0 ;i < commits.length ;i++){
+        $( commits[i] ).removeClass("activeAuthor");
+    }
+
+    var doMark;
+    if( control.markLock == author ){ //再次点击用来取消
+
+    }else{
+        //remark the targer author
+        var commits = $('#commitsTableBody [author="' + author + '"]');
+        for(var i =0 ;i < commits.length ;i++){
+            $( commits[i] ).addClass("activeAuthor");
+        };
+    }
+}
 
 control.clear = function () {
     // body...
@@ -175,7 +198,7 @@ control.show = function () {
         commit = commitsAfterFilter[idx];
         //console.log( commit );
 
-        var html = "<tr><td>" + (commitsAfterFilter.length - idx) + "</td>" 
+        var html = '<tr author="' + commit["authorName"] +'" ><td>' + (commitsAfterFilter.length - idx) + "</td>" 
         var time_str = (new Date(commit["commitTime"] * 1000)).format("yyyy-MM-dd hh:mm:ss");
 
         html += "<td>" + commit["authorName"] + "</td>"
@@ -201,7 +224,7 @@ control.show = function () {
 
         var process =  parseInt((commitReport[author]/allCommitCount)*100);
 
-        var html = '<tr sort_flag="' + commitReport[author] + '"> \
+        var html = '<tr class="markAble" sort_flag="' + commitReport[author] + '" author="' + author +  '" onclick="control.markCommitWithAuthor(this)"> \
                         <td class="author_report_table_td0">' + author + '</td>\
                         <td class="td1">' + commitReport[author] + '</td>\
                         <td>\
@@ -213,7 +236,8 @@ control.show = function () {
                         </td>\
                     </tr>';
 
-        html_nodes.push( $(html) );
+        var a_node = $(html);
+        html_nodes.push( a_node );
     }
 
     //sort
@@ -243,7 +267,7 @@ control.show = function () {
 
         var process =  parseInt((lineReport[author]/allLinesCount)*100);
 
-        var html = '<tr sort_flag="' + lineReport[author] + '"> \
+        var html = '<tr class="markAble" sort_flag="' + lineReport[author] + '" author="' + author +  '" onclick="control.markCommitWithAuthor(this)"> \
                         <td class="author_report_table_td0">' + author + '</td>\
                         <td class="td1">' + lineReport[author] + '</td>\
                         <td>\
@@ -255,15 +279,14 @@ control.show = function () {
                         </td>\
                     </tr>';
 
-        html_nodes.push( $(html) );
+        var a_node = $(html);
+        html_nodes.push( a_node );
     }
 
     html_nodes = html_nodes.sort( sort_core );
     for(var idx in html_nodes){
         $("#lineReportTable").append( html_nodes[idx] );
     }
-
-
 
     console.log("show report complete");
 }
