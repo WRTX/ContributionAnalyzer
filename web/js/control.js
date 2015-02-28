@@ -170,15 +170,16 @@ control.markCommitWithAuthor = function (tr) {
         $( commits[i] ).removeClass("activeAuthor");
     }
 
-    var doMark;
     if( control.markLock == author ){ //再次点击用来取消
-
+        control.markLock = null;
     }else{
         //remark the targer author
         var commits = $('#commitsTableBody [author="' + author + '"]');
         for(var i =0 ;i < commits.length ;i++){
             $( commits[i] ).addClass("activeAuthor");
         };
+
+        control.markLock = author;
     }
 }
 
