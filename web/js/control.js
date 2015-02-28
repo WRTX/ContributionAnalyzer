@@ -19,9 +19,15 @@ control.init = function() {
         for( var idx2 in a_dirs_group ){
 
             var a_dir = a_dirs_group[idx2];
-
+            //去掉头部可能存在的 ./
             if( a_dir.indexOf("./") == 0 ){
                 a_dirs_group[idx2] = a_dir.substr(2);
+            }
+
+            var a_dir = a_dirs_group[idx2];
+            //去掉尾部可能存在的 /
+            if( a_dir.charAt( a_dir.length -1 ) == "/" ){
+                a_dirs_group[idx2] = a_dir.substr( 0,a_dir.length - 1 );
             }
         }
     }
