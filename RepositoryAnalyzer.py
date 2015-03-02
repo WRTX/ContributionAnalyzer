@@ -94,6 +94,20 @@ def main():
     os.chdir( git_repo_dir )
     print("start Analyze git repo ")
 
+    #makesure git tool existed
+    logStr = subprocess.getoutput("git --version")
+    if "git" in logStr.lower():
+        print("Use:",logStr)
+    else:
+        print("Error: Can't found git one the computer")
+        return
+
+    #makesure the dir is a git repo
+    logStr = subprocess.getoutput("git log -n 1")
+    if "fatal" in logStr.lower():
+        print("Error: maybe the dirctory is not a git repository")
+        return
+    
     commits = collections.OrderedDict()
 
     #get all commit node info
@@ -116,6 +130,8 @@ def main():
     cmd = '''git log --merges | grep ^commit'''
     logStr = subprocess.getoutput(cmd)
     for line in logStr.strip('\n').split('\n'):
+        if line == "":
+            continue
         hashStr = line[ line.index(' ')+1:]
         #print(hashStr)
         commits[hashStr].isMerge = True#mark commit
