@@ -9,7 +9,9 @@
  > * 时间段过滤
  > * Merge commit过滤
  > * 分支，提交者 过滤
+ > * Linux Mac Windows 多平台兼容
    
+
 * 多维度贡献统计功能
 >  * commit次数
 >  * 添加,删除,修改的行数
@@ -18,9 +20,15 @@
 
 先clone要分析的仓库到本地，注意要把需要分析的branch全部clone下来，Analyzer会把所有本地存在的分支都计入统计结果
 
-然后执行以下命令来生成分析报告
+然后执行以下命令来生成分析报告 
 
-    ./RepositoryAnalyzer <RepoDirctory>        
+######注意使用Python3解释器
+
+    ./RepositoryAnalyzer <RepoDirctory> 
+
+    或者     
+    
+    python RepositoryAnalyzer  <RepoDirctory>  
     
 注: 在Report中点击一个Author可以将底部相应的commit高亮
 

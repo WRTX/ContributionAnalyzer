@@ -183,7 +183,8 @@ def main():
 
     #switch to script dir
     os.chdir( exec_dir )
-    os.chdir( os.path.split( sys.argv[0] )[0] )
+    if( os.path.split( sys.argv[0] )[0] ) != "":
+        os.chdir( os.path.split( sys.argv[0] )[0] )
 
     #print(commitJson)
     with open("./GitRepoInfo/commitsData.js",'w') as f:
